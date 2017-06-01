@@ -1,5 +1,6 @@
 package br.com.Truco;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,25 +38,26 @@ public class Jogo {
 
 	private int rodada() {
 		int pontoRodada = 1;
-		System.out.println(
-				"vez do usuário. Qual das suas 3 cartas você deseja descartar? (para responder digite de 1 a 3 da esquerda para a direita))");
+		System.out.println("vez do usuário. Qual das suas cartas você deseja descartar?");
+		ArrayList<Carta> maoUsuario = usuario.getMaoJogador();
+		for (Carta carta : maoUsuario) {
+			int opcao = (maoUsuario.indexOf(carta) +1);
+			System.out.println("Opção: " + opcao + " Carta: " +carta.getValor()+" de " + carta.getNipe());
+		}
 		input.nextInt();
-		while (input.equals(1) && usuario.getMaoJogador().get(0) == null
-				|| input.equals(2) && usuario.getMaoJogador().get(1) == null
-				|| input.equals(3) && usuario.getMaoJogador().get(2) == null) {
-
-			if (input.equals(1) && usuario.getMaoJogador().get(0) != null) {
+			if (input.equals(1)) {
 				System.out.println("Sua escolha foi a carta nmr 1");
+				//Jogar a carta para a mesa
 				usuario.getMaoJogador().remove(0);
-			} else if (input.equals(2) && usuario.getMaoJogador().get(1) != null) {
+			} else if (input.equals(2)) {
 				System.out.println("Sua escolha foi a carta nmr 2");
+				//Jogar a carta para a mesa
 				usuario.getMaoJogador().remove(1);
-			} else if (input.equals(3) && usuario.getMaoJogador().get(2) != null) {
+			} else if (input.equals(3)) {
 				System.out.println("Sua escolha foi a carta nmr 3");
+				//Jogar a carta para a mesa
 				usuario.getMaoJogador().remove(2);
 			}
-		}
-
 		// Vez do copmutador com sua maneira randomica
 		return pontoRodada;
 	}
