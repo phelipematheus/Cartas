@@ -26,5 +26,21 @@ public class Jogador
 	{
 		return maoJogador;
 	}
+
+	public int getPontoRodada() {
+		return pontoRodada;
+	}
+
+	public void setPontoRodada(int pontoRodada) {
+		this.pontoRodada = pontoRodada;
+	}
+
+	public int getPontoTruco() {
+		return PontoTruco;
+	}
+
+	public void setPontoTruco(int pontoTruco) {
+		PontoTruco = pontoTruco;
+	}
 	
 }

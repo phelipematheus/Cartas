@@ -31,12 +31,16 @@ public class Jogo {
 			computador.pegarMaoTruco(b);
 		}
 		for (int i = 0; i < 3; i++) {
-			// rodada entra aqui dentro e pode ser feita no maixom 3 vezes. Tendo um break caso na segunda o kra consigo ganhar o jogo
+			if(usuario.getPontoRodada() == 2 || computador.getPontoRodada() == 2){
+				break;
+			}
+			rodada();
 		}
 
 	}
 
 	private int rodada() {
+		ArrayList<Carta> mesa = new ArrayList<>();
 		int pontoRodada = 1;
 		System.out.println("vez do usuário. Qual das suas cartas você deseja descartar?");
 		ArrayList<Carta> maoUsuario = usuario.getMaoJogador();
@@ -47,19 +51,30 @@ public class Jogo {
 		input.nextInt();
 			if (input.equals(1)) {
 				System.out.println("Sua escolha foi a carta nmr 1");
-				//Jogar a carta para a mesa
+				mesa.add(usuario.getMaoJogador().get(0));
 				usuario.getMaoJogador().remove(0);
 			} else if (input.equals(2)) {
 				System.out.println("Sua escolha foi a carta nmr 2");
-				//Jogar a carta para a mesa
+				mesa.add(usuario.getMaoJogador().get(1));
 				usuario.getMaoJogador().remove(1);
 			} else if (input.equals(3)) {
 				System.out.println("Sua escolha foi a carta nmr 3");
-				//Jogar a carta para a mesa
+				mesa.add(usuario.getMaoJogador().get(2));
 				usuario.getMaoJogador().remove(2);
 			}
-		// Vez do copmutador com sua maneira randomica
+		
+			System.out.println("Vez do computador.");
+			
+			
 		return pontoRodada;
+	}
+	
+	public Carta logicaTruco( ArrayList<Carta> maoComputador, ArrayList<Carta> mesa){
+		
+		/* Implementar toda a lógica básica do truco - Preciso da sua ajuda Murilo.
+		 Temos que ensinar como se pensar ao ver uma carta na mesa */
+		
+		return null;
 	}
 
 	private int comparacaoCartas(Carta usuarioCarta, Carta computadorCarta) {
