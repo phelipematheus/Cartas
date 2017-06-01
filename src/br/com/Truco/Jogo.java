@@ -4,21 +4,22 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Jogo {
-	public static void main(String[] args) {
-
-		Jogo jogo = new Jogo();
-		jogo.inicio();
-	}
-
+	
 	private Jogador usuario = new Jogador();
 	private Jogador computador = new Jogador();
 	private final Baralho b;
 	private Scanner input;
 	private List<Jogador> jogadores;
-
+	
 	private Jogo() {
 		b = new Baralho();
 		input = new Scanner(System.in);
+	}
+	
+	public static void main(String[] args) {
+
+		Jogo jogo = new Jogo();
+		jogo.inicio();
 	}
 
 	private void inicio() {
