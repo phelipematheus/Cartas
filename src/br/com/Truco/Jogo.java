@@ -3,6 +3,7 @@ package br.com.Truco;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Jogo {
 	
@@ -11,10 +12,12 @@ public class Jogo {
 	private final Baralho b;
 	private Scanner input;
 	private List<Jogador> jogadores;
+	private int[] jogadaAtual = new int[2];
 	
 	private Jogo() {
 		b = new Baralho();
 		input = new Scanner(System.in);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -40,46 +43,57 @@ public class Jogo {
 	}
 
 	private int rodada() {
+		
 		ArrayList<Carta> mesa = new ArrayList<>();
 		int pontoRodada = 1;
 		System.out.println("vez do usuário. Qual das suas cartas você deseja descartar?");
-		ArrayList<Carta> maoUsuario = usuario.getMaoJogador();
-		for (Carta carta : maoUsuario) {
-			int opcao = (maoUsuario.indexOf(carta) +1);
+		for (Carta carta : usuario.getMaoJogador()) {
+			int opcao = (usuario.getMaoJogador().indexOf(carta) +1);
 			System.out.println("Opção: " + opcao + " Carta: " +carta.getValor()+" de " + carta.getNipe());
 		}
 		input.nextInt();
 			if (input.equals(1)) {
 				System.out.println("Sua escolha foi a carta nmr 1");
 				mesa.add(usuario.getMaoJogador().get(0));
-				usuario.getMaoJogador().remove(0);
+				jogadaAtual[0] = 1;
 			} else if (input.equals(2)) {
 				System.out.println("Sua escolha foi a carta nmr 2");
 				mesa.add(usuario.getMaoJogador().get(1));
-				usuario.getMaoJogador().remove(1);
+				jogadaAtual[0] = 2;
 			} else if (input.equals(3)) {
 				System.out.println("Sua escolha foi a carta nmr 3");
 				mesa.add(usuario.getMaoJogador().get(2));
-				usuario.getMaoJogador().remove(2);
+				jogadaAtual[0] = 3;
 			}
 		
 			System.out.println("Vez do computador.");
+			//  Adiciona na mesa uma carta aleatória que está na mão do jogandor
+			int rd = intRandom(1, 3);
+			jogadaAtual[1] = rd;
+			mesa.add(computador.getMaoJogador().get(rd));
+			computador.getMaoJogador().remove(rd);
 			
+			/* Comparar jogador - computador, se resultado > 0 = jogador ganhou. Se resultado < 0 = computador ganhou. else cangou! */
 			
 		return pontoRodada;
 	}
 	
+	public int intRandom(int min,int max){
+		Random random = new Random();
+		int randomNum = random.nextInt((max - min) + 1) + min;
+		return randomNum;
+	}
+	
 	public Carta logicaTruco( ArrayList<Carta> maoComputador, ArrayList<Carta> mesa){
 		
-		/* Implementar toda a lógica básica do truco - Preciso da sua ajuda Murilo.
-		 Temos que ensinar como se pensar ao ver uma carta na mesa */
+		
 		
 		return null;
 	}
 
 	private int comparacaoCartas(Carta usuarioCarta, Carta computadorCarta) {
 		
-		//Comparando se as cartas forem iguais
+		
 		if (usuarioCarta.getValor() == computadorCarta.getValor()) {
 				if (usuarioCarta.getValor() == 7) {
 					if (usuarioCarta.getNipe().equals("Copas")) {
