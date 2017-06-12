@@ -21,6 +21,17 @@ public class Jogador
 			
 		}
 	}
+	public void removerMaoJogador(int indice){
+		maoJogador.remove(indice);
+		ArrayList<Carta> auxiliar = new ArrayList<>();
+		for (Carta carta : maoJogador) {
+				auxiliar.add(carta);
+		}
+		maoJogador = new ArrayList<Carta>();
+		for (Carta carta : auxiliar) {
+			maoJogador.add(carta);
+		}
+	}
 	
 	public ArrayList<Carta> getMaoJogador()
 	{
@@ -32,7 +43,7 @@ public class Jogador
 	}
 
 	public void setPontoRodada(int pontoRodada) {
-		this.pontoRodada = pontoRodada;
+		this.pontoRodada = pontoRodada ;
 	}
 
 	public int getPontoTruco() {

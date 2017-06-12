@@ -6,20 +6,21 @@ import java.util.Random;
 public class Baralho {
 
 	Carta[] baralho = new Carta[28];
-	ArrayList<ArrayList<Carta>> ordemTruco = new ArrayList<>();
-
+	private ArrayList<ArrayList<Carta>> ordemTruco = new ArrayList<>();
+	public int vetcarta = 0;
+	
 	public Baralho() {
 		this.criarBaralho();
 	}
 
 	private void criarBaralho() {
-		int vetcarta = 0;
-		criarBaralhoTodosOsNipes(vetcarta,11);
-		criarBaralhoTodosOsNipes(vetcarta,12);
-		criarBaralhoTodosOsNipes(vetcarta,13);
-		criarBaralhoTodosOsNipes(vetcarta,1);
-		criarBaralhoTodosOsNipes(vetcarta,2);
-		criarBaralhoTodosOsNipes(vetcarta,3);
+		
+		criarBaralhoTodosOsNipes(11);
+		criarBaralhoTodosOsNipes(12);
+		criarBaralhoTodosOsNipes(13);
+		criarBaralhoTodosOsNipes(1);
+		criarBaralhoTodosOsNipes(2);
+		criarBaralhoTodosOsNipes(3);
 
 		Carta Joker = new Carta();
 		Joker.setNipe("Joker");
@@ -64,7 +65,7 @@ public class Baralho {
 	
 	}
 
-	private int criarBaralhoTodosOsNipes(int vetcarta,int cartaNumero) {
+	private int criarBaralhoTodosOsNipes(int cartaNumero) {
 		ArrayList<String> nipe = new ArrayList<>();
 		nipe.add("Copas");
 		if(!(cartaNumero == 1)){
@@ -77,16 +78,26 @@ public class Baralho {
 			Carta carta = new Carta();
 			carta.setValor(cartaNumero);
 			carta.setNipe(cartaNipe);
-			baralho[vetcarta] = carta;
-			vetcarta++;
+			baralho[this.vetcarta] = carta;
+			this.vetcarta++;
 			grupo.add(carta);
 		}
 		ordemTruco.add(grupo);
-		grupo.clear();
+
 
 		return vetcarta;
 	}
 
+	public int acharCarta(Carta cartaJogador ){
+		int index;
+		for (ArrayList<Carta> grupoCarta : ordemTruco) {
+		 index = grupoCarta.indexOf(cartaJogador);
+			if(index != -1){	
+				return index;
+			}
+		}
+		return -1;
+	}
 
 	
 	public void embaralhar() {
@@ -105,6 +116,8 @@ public class Baralho {
 		}
 	}
 
-	
+	public ArrayList<ArrayList<Carta>> getOrdemTruco() {
+		return ordemTruco;
+	}
 	
 }
