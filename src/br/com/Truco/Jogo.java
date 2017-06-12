@@ -1,6 +1,8 @@
 package br.com.Truco;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -39,17 +41,26 @@ public class Jogo {
 				}
 				int resultado = rodada();
 				if (resultado > 0) {
-					// Jogador ganhou rodada
+					// Usuario ganhou rodada
 					usuario.setPontoRodada(usuario.getPontoRodada() + 1);
+					usuario.setGanhou(true);
+					computador.setGanhou(false);
 					partida[i] = 1;
 					mostraResultadoRodada();
 				} else if (resultado < 0) {
 					// Computador perdeu rodada
 					computador.setPontoRodada(computador.getPontoRodada() + 1);
+					computador.setGanhou(true);
+					usuario.setGanhou(false);
 					partida[i] = -1;
 					mostraResultadoRodada();
 				} else {
 					// Cangou
+					if (i == 0) {
+						// fazer o método em que mostra as duas cartas e compara
+						// a maior com a maior e a menor com a menor
+
+					}
 					if (i == 2) {
 						// Se empatou for na ultima rodada
 						if (partida[0] == 1) {
@@ -75,19 +86,110 @@ public class Jogo {
 			usuario.setPontoRodada(0);
 			computador.setPontoRodada(0);
 		}
-		if(usuario.getPontoTruco() > computador.getPontoTruco()){
-			System.out.println("O ganhador foi: Usuario com "+usuario.getPontoTruco()+" pontos contra "+computador.getPontoTruco()+" do Computador");
-		}else if( computador.getPontoTruco() > usuario.getPontoTruco()){
-			System.out.println("O ganhador foi: Computador com "+computador.getPontoTruco()+" pontos contra "+usuario.getPontoTruco()+" do Usuario");
+		if (usuario.getPontoTruco() > computador.getPontoTruco()) {
+			System.out.println("O ganhador foi: Usuario com " + usuario.getPontoTruco() + " pontos contra "
+					+ computador.getPontoTruco() + " do Computador");
+		} else if (computador.getPontoTruco() > usuario.getPontoTruco()) {
+			System.out.println("O ganhador foi: Computador com " + computador.getPontoTruco() + " pontos contra "
+					+ usuario.getPontoTruco() + " do Usuario");
 		}
 		System.out.println("Fim");
 
 	}
 
 	private int rodada() {
-
 		ArrayList<Carta> mesa = new ArrayList<>();
-		System.out.println("Vez do usuário. Qual das suas cartas você deseja descartar?");
+
+		if (usuario.isGanhou()) {
+			System.out.println("Vez do usuário. Qual das suas cartas você deseja descartar?");
+			mesa = vezDoUsuario(mesa);
+
+			System.out.println("Vez do computador.");
+			mesa = vezDoComputador(mesa);
+		} else {
+			System.out.println("Vez do computador.");
+			mesa = vezDoComputador(mesa);
+
+			System.out.println("Vez do usuário. Qual das suas cartas você deseja descartar?");
+			mesa = vezDoUsuario(mesa);
+		}
+
+		/*
+		 * Comparar jogador - computador, se resultado > 0 = jogador ganhou. Se
+		 * resultado < 0 = computador ganhou. else cangou!
+		 */
+		int cartaValorUser = b.acharCarta(usuario.getMaoJogador().get(jogadaAtual[0]));
+		int cartaValorComp = b.acharCarta(computador.getMaoJogador().get(jogadaAtual[1]));
+		if (cartaValorUser == -1) {
+			System.out.println("ERRO CARTA NÃO ENCONTRADA(JOGADOR)");
+			System.exit(1);
+		}
+		if (cartaValorComp == -1) {
+			System.out.println("ERRO CARTA NÃO ENCONTRADA(COMPUTADOR)");
+			System.exit(1);
+		}
+		int resposta = cartaValorUser - cartaValorComp;
+		usuario.removerMaoJogador(jogadaAtual[0]);
+		computador.removerMaoJogador(jogadaAtual[1]);
+
+		return resposta;
+	}
+
+	public void cangoPrimeira() {
+		ArrayList<Integer> valorCartasUsuario = new ArrayList<Integer>();
+		ArrayList<Integer> valorCartasComputador = new ArrayList<Integer>();
+		for (Carta carta : usuario.getMaoJogador()) {
+			for (ArrayList<Carta> ordemCartas : b.getOrdemTruco()) {
+				for (Carta carta2 : ordemCartas) {
+					if (carta.equals(carta2)) {
+						valorCartasUsuario.add(ordemCartas.indexOf(carta2));
+					}
+				}
+			}
+		}
+
+		for (Carta carta : computador.getMaoJogador()) {
+			for (ArrayList<Carta> ordemCartas : b.getOrdemTruco()) {
+				for (Carta carta2 : ordemCartas) {
+					if (carta.equals(carta2)) {
+						valorCartasComputador.add(ordemCartas.indexOf(carta2));
+					}
+				}
+			}
+		}
+		
+		Collections.sort(valorCartasUsuario, new Comparator<Integer>(){
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				
+				return o1.compareTo(o2);
+			}
+			
+		});
+		
+		Collections.sort(valorCartasComputador, new Comparator<Integer>(){
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				
+				return o1.compareTo(o2);
+			}
+			
+		});
+		System.out.println(valorCartasUsuario.get(0));
+		System.out.println(valorCartasUsuario.get(1));
+		System.out.println(valorCartasComputador.get(0));
+		System.out.println(valorCartasComputador.get(1));
+		
+		int primeira = valorCartasUsuario.get(0) - valorCartasComputador.get(0);
+		int segunda = valorCartasUsuario.get(1) - valorCartasComputador.get(1);
+		
+		//Continuar
+	}
+
+	public ArrayList<Carta> vezDoUsuario(ArrayList<Carta> mesa) {
+
 		for (Carta carta : usuario.getMaoJogador()) {
 			int opcao = (usuario.getMaoJogador().indexOf(carta) + 1);
 			System.out.println("Opção: " + opcao + " Carta: " + carta.getValor() + " de " + carta.getNipe());
@@ -110,7 +212,11 @@ public class Jogo {
 			jogadaAtual[0] = 2;
 		}
 
-		System.out.println("Vez do computador.");
+		return mesa;
+	}
+
+	public ArrayList<Carta> vezDoComputador(ArrayList<Carta> mesa) {
+
 		// Adiciona na mesa uma carta aleatória que está na mão do jogandor
 		int rd = intRandom(0, computador.getMaoJogador().size());
 		jogadaAtual[1] = rd;
@@ -118,24 +224,7 @@ public class Jogo {
 				+ computador.getMaoJogador().get(rd).getNipe());
 		mesa.add(computador.getMaoJogador().get(rd));
 
-		/*
-		 * Comparar jogador - computador, se resultado > 0 = jogador ganhou. Se
-		 * resultado < 0 = computador ganhou. else cangou!
-		 */
-		int indUser = b.acharCarta(usuario.getMaoJogador().get(jogadaAtual[0]));
-		int indComp = b.acharCarta(computador.getMaoJogador().get(jogadaAtual[1]));
-		if (indUser == -1) {
-			System.out.println("ERRO CARTA NÃO ENCONTRADA(JOGADOR)");
-			System.exit(1);
-		}
-		if (indComp == -1) {
-			System.out.println("ERRO CARTA NÃO ENCONTRADA(COMPUTADOR)");
-			System.exit(1);
-		}
-		int resposta = indUser - indComp;
-		usuario.removerMaoJogador(jogadaAtual[0]);
-		computador.removerMaoJogador(jogadaAtual[1]);
-		return resposta;
+		return mesa;
 	}
 
 	public int intRandom(int min, int max) {
@@ -145,13 +234,13 @@ public class Jogo {
 	}
 
 	public void mostraResultadoRodada() {
-		System.out.println("Pontuação da rodada:/n Usuario: " + usuario.getPontoRodada() + "/n Computador: "
-				+ computador.getPontoRodada() + "/n/n/n");
+		System.out.println("Pontuação da rodada:\n Usuario: " + usuario.getPontoRodada() + "\n Computador: "
+				+ computador.getPontoRodada() + "\n\n\n");
 	}
 
 	public void mostrarResultadoPartida() {
-		System.out.println("Pontuação da rodada:/n Usuario: " + usuario.getPontoTruco() + "/n Computador: "
-				+ computador.getPontoTruco() + "/n/n/n");
+		System.out.println("Pontuação da rodada:\n Usuario: " + usuario.getPontoTruco() + "\n Computador: "
+				+ computador.getPontoTruco() + "\n\n\n");
 	}
 
 }

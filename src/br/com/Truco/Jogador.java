@@ -6,6 +6,7 @@ public class Jogador
 {
 	private int PontoTruco;
 	private int pontoRodada;
+	private boolean ganhou;
 	private ArrayList<Carta> maoJogador = new ArrayList<Carta>();
 	
 	public void pegarMaoTruco(Baralho b)
@@ -52,6 +53,12 @@ public class Jogador
 
 	public void setPontoTruco(int pontoTruco) {
 		PontoTruco = pontoTruco;
+	}
+	public boolean isGanhou() {
+		return ganhou;
+	}
+	public void setGanhou(boolean ganhou) {
+		this.ganhou = ganhou;
 	}
 	
 }
