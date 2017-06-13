@@ -58,8 +58,9 @@ public class Jogo {
 					// Cangou
 					if (i == 0) {
 						// fazer o método em que mostra as duas cartas e compara
-						// a maior com a maior e a menor com a menor
-
+						// a maior com a maior
+						cangouPrimeira();
+						break;
 					}
 					if (i == 2) {
 						// Se empatou for na ultima rodada
@@ -100,10 +101,9 @@ public class Jogo {
 	private int rodada() {
 		ArrayList<Carta> mesa = new ArrayList<>();
 
-		if (usuario.isGanhou()) {
+		if (usuario.isGanhou() || !(usuario.isGanhou()) && !(computador.isGanhou())) {
 			System.out.println("Vez do usuário. Qual das suas cartas você deseja descartar?");
 			mesa = vezDoUsuario(mesa);
-
 			System.out.println("Vez do computador.");
 			mesa = vezDoComputador(mesa);
 		} else {
@@ -135,7 +135,7 @@ public class Jogo {
 		return resposta;
 	}
 
-	public void cangoPrimeira() {
+	public int cangouPrimeira() {
 		ArrayList<Integer> valorCartasUsuario = new ArrayList<Integer>();
 		ArrayList<Integer> valorCartasComputador = new ArrayList<Integer>();
 		for (Carta carta : usuario.getMaoJogador()) {
@@ -182,10 +182,9 @@ public class Jogo {
 		System.out.println(valorCartasComputador.get(0));
 		System.out.println(valorCartasComputador.get(1));
 		
-		int primeira = valorCartasUsuario.get(0) - valorCartasComputador.get(0);
-		int segunda = valorCartasUsuario.get(1) - valorCartasComputador.get(1);
+		int maiorCarta = valorCartasUsuario.get(0) - valorCartasComputador.get(0);
 		
-		//Continuar
+		return maiorCarta;
 	}
 
 	public ArrayList<Carta> vezDoUsuario(ArrayList<Carta> mesa) {
@@ -210,6 +209,10 @@ public class Jogo {
 					+ usuario.getMaoJogador().get(2).getNipe());
 			mesa.add(usuario.getMaoJogador().get(2));
 			jogadaAtual[0] = 2;
+		} else if(respUsuario == 4){
+			//Parte de pedir truco
+			System.out.println("Você pediu TRUCO - se ganhar ganhará 3 pontos");
+			respostaTrucoComputador();
 		}
 
 		return mesa;
@@ -243,4 +246,19 @@ public class Jogo {
 				+ computador.getPontoTruco() + "\n\n\n");
 	}
 
+	public void respostaTrucoComputador(){
+		int rd = intRandom(0, 2);
+		if(rd == 0){
+			System.out.println("Fujiu");
+		}else if(rd == 1){
+			System.out.println("Caí!");
+		}else if(rd == 2){
+			System.out.println("");
+		}
+	}
+	
+	public void respostaTrucoUsuario(){
+		
+	}
+	
 }
