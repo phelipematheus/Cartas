@@ -33,7 +33,7 @@ public class Jogo {
 			b = new Baralho();
 			b.embaralhar();
 			for (int i = 0; i < 3; i++) {
-				// Início de uma rodada
+				//Início de uma rodada
 				ponto = 1;
 				usuario.pegarMaoTruco(b);
 				computador.pegarMaoTruco(b);
@@ -55,7 +55,7 @@ public class Jogo {
 					mostraResultadoRodada();
 				} else if (resultado < 0) {
 
-					// Computador perdeu rodada
+					// Computador ganha rodada
 					computador.setPontoRodada(computador.getPontoRodada() + ponto);
 					computador.setGanhou(true);
 					usuario.setGanhou(false);
@@ -107,8 +107,7 @@ public class Jogo {
 			usuario.getMaoJogador().clear();
 			computador.getMaoJogador().clear();
 
-			System.out.println("Fim da rodada " + (j + 1));
-			mostrarResultadoPartida();
+			System.out.println("Fim da partida " + (j + 1));
 			System.out.println("\n\n\n\n");
 		}
 		if (usuario.getPontoTruco() > computador.getPontoTruco()) {
@@ -181,8 +180,8 @@ public class Jogo {
 		String nipe;
 		respTruco = "";
 		for (Carta carta : usuario.getMaoJogador()) {
-			int opcao = (usuario.getMaoJogador().indexOf(carta) + 1);
-			System.out.println("Opção: " + opcao + " Carta: " + carta.getValor() + " de " + carta.getNipe());
+			String opcao = Integer.toString(usuario.getMaoJogador().indexOf(carta) + 1);
+			System.out.println("Opção: " + parseCarta(opcao) + " Carta: " + carta.getValor() + " de " + carta.getNipe());
 		}
 		if (!truco) {
 			System.out.println("Opção: 4 Pedir TRUCO!");

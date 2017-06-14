@@ -8,7 +8,7 @@ public class Baralho {
 	Carta[] baralho = new Carta[28];
 	private ArrayList<ArrayList<Carta>> ordemTruco = new ArrayList<>();
 	public int vetcarta = 0;
-	
+
 	public Baralho() {
 		this.criarBaralho();
 	}
@@ -29,7 +29,7 @@ public class Baralho {
 		ArrayList<Carta> jokerGrupo = new ArrayList<>();
 		jokerGrupo.add(joker);
 		ordemTruco.add(jokerGrupo);
-		
+
 		Carta seteOuro = new Carta();
 		seteOuro.setValor(7);
 		seteOuro.setNipe("Ouro");
@@ -37,7 +37,7 @@ public class Baralho {
 		ArrayList<Carta> seteOuroGrupo = new ArrayList<>();
 		seteOuroGrupo.add(seteOuro);
 		ordemTruco.add(seteOuroGrupo);
-		
+
 		Carta espadilha = new Carta();
 		espadilha.setNipe("Espada");
 		espadilha.setValor(1);
@@ -45,7 +45,7 @@ public class Baralho {
 		ArrayList<Carta> espadilhaGrupo = new ArrayList<>();
 		espadilhaGrupo.add(espadilha);
 		ordemTruco.add(espadilhaGrupo);
-		
+
 		Carta seteCopas = new Carta();
 		seteCopas.setValor(7);
 		seteCopas.setNipe("Copas");
@@ -53,7 +53,7 @@ public class Baralho {
 		ArrayList<Carta> seteCopasGrupo = new ArrayList<>();
 		seteCopasGrupo.add(seteCopas);
 		ordemTruco.add(seteCopasGrupo);
-		
+
 		Carta Zap = new Carta();
 		Zap.setNipe("Paus");
 		Zap.setValor(4);
@@ -61,14 +61,13 @@ public class Baralho {
 		ArrayList<Carta> zapGrupo = new ArrayList<>();
 		zapGrupo.add(Zap);
 		ordemTruco.add(zapGrupo);
-		
-	
+
 	}
 
 	private int criarBaralhoTodosOsNipes(int cartaNumero) {
 		ArrayList<String> nipe = new ArrayList<>();
 		nipe.add("Copas");
-		if(!(cartaNumero == 1)){
+		if (!(cartaNumero == 1)) {
 			nipe.add("Espada");
 		}
 		nipe.add("Ouro");
@@ -84,22 +83,21 @@ public class Baralho {
 		}
 		ordemTruco.add(grupo);
 
-
 		return vetcarta;
 	}
 
-	public int acharCarta(Carta cartaJogador ){
-		int index;
-		for (ArrayList<Carta> grupoCarta : ordemTruco) {
-		 index = grupoCarta.indexOf(cartaJogador);
-			if(index != -1){	
-				return index;
+	public int acharCarta(Carta cartaJogador) {
+		for (int i = 0; i < ordemTruco.size(); i++) {
+			for (int j = 0; j < ordemTruco.get(i).size(); j++) {
+				if (ordemTruco.get(i).get(j).getNipe().equals(cartaJogador.getNipe())
+						&& ordemTruco.get(i).get(j).getValor() == cartaJogador.getValor()) {
+					return i;
+				}
 			}
 		}
 		return -1;
 	}
 
-	
 	public void embaralhar() {
 		Random gerador = new Random();
 		int a, b;
@@ -119,5 +117,5 @@ public class Baralho {
 	public ArrayList<ArrayList<Carta>> getOrdemTruco() {
 		return ordemTruco;
 	}
-	
+
 }
