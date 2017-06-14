@@ -14,44 +14,44 @@ public class Baralho {
 	}
 
 	private void criarBaralho() {
-		
-		criarBaralhoTodosOsNipes(11);
+
 		criarBaralhoTodosOsNipes(12);
+		criarBaralhoTodosOsNipes(11);
 		criarBaralhoTodosOsNipes(13);
 		criarBaralhoTodosOsNipes(1);
 		criarBaralhoTodosOsNipes(2);
 		criarBaralhoTodosOsNipes(3);
 
-		Carta Joker = new Carta();
-		Joker.setNipe("Joker");
-		Joker.setValor(15);
-		baralho[vetcarta] = Joker;
+		Carta joker = new Carta();
+		joker.setNipe("Joker");
+		joker.setValor(14);
+		baralho[vetcarta] = joker;
 		ArrayList<Carta> jokerGrupo = new ArrayList<>();
-		jokerGrupo.add(Joker);
+		jokerGrupo.add(joker);
 		ordemTruco.add(jokerGrupo);
 		
-		Carta SeteOuro = new Carta();
-		SeteOuro.setValor(7);
-		SeteOuro.setNipe("Ouro");
-		baralho[vetcarta] = SeteOuro;
+		Carta seteOuro = new Carta();
+		seteOuro.setValor(7);
+		seteOuro.setNipe("Ouro");
+		baralho[vetcarta] = seteOuro;
 		ArrayList<Carta> seteOuroGrupo = new ArrayList<>();
-		seteOuroGrupo.add(SeteOuro);
+		seteOuroGrupo.add(seteOuro);
 		ordemTruco.add(seteOuroGrupo);
 		
-		Carta Espadilha = new Carta();
-		Joker.setNipe("Espadas");
-		Joker.setValor(1);
-		baralho[vetcarta] = Espadilha;
+		Carta espadilha = new Carta();
+		espadilha.setNipe("Espada");
+		espadilha.setValor(1);
+		baralho[vetcarta] = espadilha;
 		ArrayList<Carta> espadilhaGrupo = new ArrayList<>();
-		espadilhaGrupo.add(Espadilha);
+		espadilhaGrupo.add(espadilha);
 		ordemTruco.add(espadilhaGrupo);
 		
-		Carta SeteCopas = new Carta();
-		SeteCopas.setValor(7);
-		SeteCopas.setNipe("Copas");
-		baralho[vetcarta] = SeteCopas;
+		Carta seteCopas = new Carta();
+		seteCopas.setValor(7);
+		seteCopas.setNipe("Copas");
+		baralho[vetcarta] = seteCopas;
 		ArrayList<Carta> seteCopasGrupo = new ArrayList<>();
-		seteCopasGrupo.add(SeteCopas);
+		seteCopasGrupo.add(seteCopas);
 		ordemTruco.add(seteCopasGrupo);
 		
 		Carta Zap = new Carta();
