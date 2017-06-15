@@ -33,7 +33,7 @@ public class Jogo {
 			b = new Baralho();
 			b.embaralhar();
 			for (int i = 0; i < 3; i++) {
-				//Início de uma rodada
+				// Início de uma rodada
 				ponto = 1;
 				usuario.pegarMaoTruco(b);
 				computador.pegarMaoTruco(b);
@@ -126,14 +126,14 @@ public class Jogo {
 		if (usuario.isGanhou() || !(usuario.isGanhou()) && !(computador.isGanhou())) {
 			System.out.println("Vez do usuário. Qual das suas cartas você deseja descartar?");
 			if (vezDoUsuario(false)) {
-				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!") {
+				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!" || respTruco == "Cai!") {
 					vezDoUsuario(true);
 				} else
 					return 1;
 			} else
 				System.out.println("Vez do computador.");
 			if (vezDoComputador(false)) {
-				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!") {
+				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!" || respTruco == "Cai!") {
 					vezDoComputador(true);
 				} else
 					return -1;
@@ -141,14 +141,14 @@ public class Jogo {
 		} else {
 			System.out.println("Vez do computador.");
 			if (vezDoComputador(false)) {
-				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!") {
+				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!" || respTruco == "Cai!") {
 					vezDoComputador(true);
 				} else
 					return -1;
 			}
 			System.out.println("Vez do usuário. Qual das suas cartas você deseja descartar?");
 			if (vezDoUsuario(false)) {
-				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!") {
+				if (respTruco == "Seis!" || respTruco == "Nove!" || respTruco == "Doze!" || respTruco == "Cai!") {
 					vezDoUsuario(true);
 				} else
 					return 1;
@@ -180,8 +180,10 @@ public class Jogo {
 		String nipe;
 		respTruco = "";
 		for (Carta carta : usuario.getMaoJogador()) {
-			String opcao = Integer.toString(usuario.getMaoJogador().indexOf(carta) + 1);
-			System.out.println("Opção: " + parseCarta(opcao) + " Carta: " + carta.getValor() + " de " + carta.getNipe());
+			valor = Integer.toString(carta.getValor());
+			nipe = carta.getNipe();
+			System.out.println(
+					"Opção " + (usuario.getMaoJogador().indexOf(carta) + 1) + " - Carta: " + parseCarta(valor) + " de " + nipe);
 		}
 		if (!truco) {
 			System.out.println("Opção: 4 Pedir TRUCO!");
@@ -291,7 +293,6 @@ public class Jogo {
 			System.out.println("A escolha do computador foi " + parseCarta(valor) + " de " + nipe);
 		} else if (rd == 4) {
 			System.out.println("A escolha do computador foi TRUCO! - se ganhar, ganhará 3 pontos");
-
 			if (respostaTrucoUsuario("Truco").equals("Seis!")) {
 				System.out.println("Seis!");
 				respTruco = "Seis!";
@@ -527,13 +528,12 @@ public class Jogo {
 
 				return o1.compareTo(o2);
 			}
-
 		});
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("                         Usuario");
 		System.out.println("Menor Carta: " + valorCartasUsuario.get(0));
 		System.out.print("Maior Cartao: " + valorCartasUsuario.get(1));
-		System.out.println("                         Computador");
+		System.out.println("                      Computador");
 		System.out.println("Menor Carta: " + valorCartasComputador.get(0));
 		System.out.print("Maior Carta: " + valorCartasComputador.get(1));
 		System.out.println("\n---------------------------------------------------------------");
@@ -545,13 +545,15 @@ public class Jogo {
 
 	public String parseCarta(String valor) {
 		if (valor.equals("11")) {
-			return "Valete";
+			return "J";
 		} else if (valor.equals("12")) {
-			return "Dama";
+			return "Q";
 		} else if (valor.equals("13")) {
-			return "Rei";
+			return "K";
 		} else if (valor.equals("14")) {
 			return "Joker";
+		} else if(valor.equals("1")){
+			return "A";
 		}
 		return valor;
 	}
